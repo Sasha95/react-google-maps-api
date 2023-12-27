@@ -1,10 +1,9 @@
 import type { Library } from '@googlemaps/js-api-loader'
-import invariant from 'invariant'
 
 export type Libraries = Library[]
 
 export interface LoadScriptUrlOptions {
-  googleMapsApiKey: string | ""
+  googleMapsApiKey: string | undefined
   googleMapsClientId?: string | undefined
   version?: string | undefined
   language?: string | undefined
@@ -13,25 +12,22 @@ export interface LoadScriptUrlOptions {
   channel?: string | undefined
   mapIds?: string[] | undefined
   authReferrerPolicy?: 'origin' | undefined
+  apiUrl: string
 }
 
 export function makeLoadScriptUrl({
   googleMapsApiKey,
   googleMapsClientId,
   version = 'weekly',
+  apiUrl,
   language,
   region,
   libraries,
   channel,
   mapIds,
-  authReferrerPolicy
+  authReferrerPolicy,
 }: LoadScriptUrlOptions): string {
   const params = []
-
-  invariant(
-    (googleMapsApiKey && googleMapsClientId) || !(googleMapsApiKey && googleMapsClientId),
-    'You need to specify either googleMapsApiKey or googleMapsClientId for @react-google-maps/api load script to work. You cannot use both at the same time.'
-  )
 
   if (googleMapsApiKey) {
     params.push(`key=${googleMapsApiKey}`)
@@ -69,5 +65,5 @@ export function makeLoadScriptUrl({
 
   params.push('callback=initMap')
 
-  return `https://maps.googleapis.com/maps/api/js?${params.join('&')}`
+  return `${apiUrl}/maps/api/js?${params.join('&')}`
 }
