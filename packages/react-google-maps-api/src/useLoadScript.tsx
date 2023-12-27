@@ -12,7 +12,7 @@ import { defaultLoadScriptProps } from './LoadScript'
 export interface UseLoadScriptOptions extends LoadScriptUrlOptions {
   id?: string | undefined
   nonce?: string | undefined
-  preventGoogleFontsLoading?: boolean | undefined
+  preventGoogleFontsLoading?: boolean | undefined;
 }
 
 let previouslyLoadedUrl: string
@@ -30,6 +30,7 @@ export function useLoadScript({
   channel,
   mapIds,
   authReferrerPolicy,
+  apiUrl = "https://maps.googleapis.com"
 }: UseLoadScriptOptions): {
   isLoaded: boolean
   loadError: Error | undefined
@@ -76,7 +77,8 @@ export function useLoadScript({
     libraries,
     channel,
     mapIds,
-    authReferrerPolicy
+    authReferrerPolicy,
+    apiUrl
   })
 
   useEffect(
@@ -105,7 +107,7 @@ export function useLoadScript({
           }
           console.warn(`
         There has been an Error with loading Google Maps API script, please check that you provided correct google API key (${googleMapsApiKey ||
-          '-'}) or Client ID (${googleMapsClientId || '-'})
+            '-'}) or Client ID (${googleMapsClientId || '-'})
         Otherwise it is a Network issue.
       `)
           console.error(err)

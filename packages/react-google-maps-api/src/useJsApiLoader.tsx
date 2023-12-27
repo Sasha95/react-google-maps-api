@@ -46,7 +46,7 @@ export function useJsApiLoader({
   const loader = useMemo(() => {
     return new Loader({
       id,
-      apiKey: googleMapsApiKey,
+      apiKey: googleMapsApiKey || "",
       version,
       libraries,
       language: language || 'en',
@@ -62,13 +62,13 @@ export function useJsApiLoader({
       return
     } else {
       loader.load().then(() => {
-        if (isMounted.current) {setLoaded(true)}
+        if (isMounted.current) { setLoaded(true) }
 
         return
       })
-      .catch((error) => {
-        setLoadError(error)
-      })
+        .catch((error) => {
+          setLoadError(error)
+        })
     }
   }, [])
 
