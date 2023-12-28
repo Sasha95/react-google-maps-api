@@ -82,6 +82,7 @@ class DocsApiKeyInput extends Component<{}, DocsApiKeyInputState> {
             version='weekly'
             libraries={libraries}
             loadingElement={loadingElement}
+            apiUrl='https://maps.googleapis.com'
           />
         ) : (
           <></>
